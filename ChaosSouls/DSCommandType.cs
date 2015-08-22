@@ -12,7 +12,26 @@ namespace ChaosSouls
         Right,
         Forward,
         Back,
+        ForwardLeft,
+        ForwardRight,
+        BackLeft,
+        BackRight,
         Backstep,
+
+        StartMovingForward,
+        StartMovingForwardLeft,
+        StartMovingForwardRight,
+        StartMovingBack,
+        StartMovingBackLeft,
+        StartMovingBackRight,
+        StartMovingLeft,
+        StartMovingRight,
+
+        StopMoving,
+
+        StartRunning,
+        StopRunning,
+
         CameraAngleUp,
         CameraAngleDown,
         CameraAngleLeft,
@@ -41,6 +60,13 @@ namespace ChaosSouls
         RollForward,
         RollBack,
         RollLeft,
-        RollRight
+        RollRight,
+        JumpAttack,
+
+        RightAttackHeavyCombo,
+        RightAttackLightCombo,
+
+        StartBlocking,
+        StopBlocking
     }
 }

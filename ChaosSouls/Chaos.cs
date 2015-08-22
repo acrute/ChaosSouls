@@ -10,42 +10,60 @@ namespace ChaosSouls
     {
         private static System.Timers.Timer ChaosTimer;
 
-        public static IEnumerable<DarkSoulsCommand> PossibleCommands = new[] 
+        public static IEnumerable<DSCommandType> PossibleCommands = new[] 
         {
-            DarkSoulsCommands.Backstep,
-            DarkSoulsCommands.GoLeft,
-            DarkSoulsCommands.GoRight,
-            DarkSoulsCommands.GoForward,
-            DarkSoulsCommands.GoBack,
-            DarkSoulsCommands.CameraAngleUp,
-            DarkSoulsCommands.CameraAngleDown,
-            DarkSoulsCommands.CameraAngleLeft,
-            DarkSoulsCommands.CameraAngleRight,
-            DarkSoulsCommands.EnvironmentInteraction,
-            DarkSoulsCommands.SwitchActiveSpell,
-            DarkSoulsCommands.SwitchLeftHandEquip,
-            DarkSoulsCommands.SwitchRightHandEquip,
-            DarkSoulsCommands.SwitchActiveItem,
-            DarkSoulsCommands.ToggleLockOn,
-            DarkSoulsCommands.GestureMenu,
-            DarkSoulsCommands.ToggleWeaponGrip,
-            DarkSoulsCommands.RightAttackHeavy,
-            DarkSoulsCommands.RightAttackLight,
-            DarkSoulsCommands.Parry,
-            DarkSoulsCommands.Block,
-            DarkSoulsCommands.Confirm,
-            DarkSoulsCommands.Cancel,
-            DarkSoulsCommands.ToggleMenu,
-            DarkSoulsCommands.MenuPageUp,
-            DarkSoulsCommands.MenuPageDown,
-            DarkSoulsCommands.MenuInfoToggle,
-            DarkSoulsCommands.MenuTakeOffEquipment,
-            DarkSoulsCommands.UseItem,
-            DarkSoulsCommands.Kick,
-            DarkSoulsCommands.RollForward,
-            DarkSoulsCommands.RollBack,
-            DarkSoulsCommands.RollLeft,
-            DarkSoulsCommands.RollRight,
+            DSCommandType.Backstep,
+            DSCommandType.Left,
+            DSCommandType.Right,
+            DSCommandType.Forward,
+            DSCommandType.Back,
+            DSCommandType.CameraAngleUp,
+            DSCommandType.CameraAngleDown,
+            DSCommandType.CameraAngleLeft,
+            DSCommandType.CameraAngleRight,
+            DSCommandType.EnvironmentInteraction,
+            DSCommandType.SwitchActiveSpell,
+            DSCommandType.SwitchLeftHandEquip,
+            DSCommandType.SwitchRightHandEquip,
+            DSCommandType.SwitchActiveItem,
+            DSCommandType.ToggleLockOn,
+            DSCommandType.GestureMenu,
+            DSCommandType.ToggleWeaponGrip,
+            DSCommandType.RightAttackHeavy,
+            DSCommandType.RightAttackLight,
+            DSCommandType.Parry,
+            DSCommandType.Block,
+            DSCommandType.Confirm,
+            DSCommandType.Cancel,
+            DSCommandType.ToggleMenu,
+            DSCommandType.MenuPageUp,
+            DSCommandType.MenuPageDown,
+            DSCommandType.MenuInfoToggle,
+            DSCommandType.MenuTakeOffEquipment,
+            DSCommandType.UseItem,
+            DSCommandType.Kick,
+            DSCommandType.RollForward,
+            DSCommandType.RollBack,
+            DSCommandType.RollLeft,
+            DSCommandType.RollRight,
+            DSCommandType.JumpAttack,
+            DSCommandType.RightAttackHeavyCombo,
+            DSCommandType.RightAttackLightCombo,
+            DSCommandType.StartBlocking,
+            DSCommandType.StopBlocking,
+
+            DSCommandType.StartMovingForward,
+            DSCommandType.StartMovingForwardLeft,
+            DSCommandType.StartMovingForwardRight,
+            DSCommandType.StartMovingBack,
+            DSCommandType.StartMovingBackLeft,
+            DSCommandType.StartMovingBackRight,
+            DSCommandType.StartMovingLeft,
+            DSCommandType.StartMovingRight,
+
+            DSCommandType.StopMoving,
+            DSCommandType.StartRunning,
+            DSCommandType.StopRunning
         };
 
         private static System.Timers.Timer CreateTimer(int interval)
@@ -58,7 +76,7 @@ namespace ChaosSouls
 
         public static void Incite()
         {
-            ChaosTimer = CreateTimer(50);
+            ChaosTimer = CreateTimer(200);
             ChaosTimer.Elapsed += OnTimedEvent;
             ChaosTimer.Start();
         }
@@ -74,9 +92,9 @@ namespace ChaosSouls
         {
             var random = new Random();
             var index = random.Next(PossibleCommands.Count());
-            var command = PossibleCommands.ElementAt(index);
+            var commandType = PossibleCommands.ElementAt(index);
 
-            DSCommandHandler.HandleDSCommand(command);
+            DSCommandHandler.HandleDSCommand(commandType);
         }
     }
 }

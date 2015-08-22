@@ -62,6 +62,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chaos.cs" />
+    <Compile Include="Handlers\DelayedKeyCommandHandler.cs" />
+    <Compile Include="Handlers\HoldKeyCommandHandler.cs" />
+    <Compile Include="Handlers\ICommandHandler.cs" />
+    <Compile Include="Handlers\KeyboardInterface.cs" />
+    <Compile Include="Handlers\KeyChordCommandHandler.cs" />
+    <Compile Include="Handlers\ReleaseKeyCommandHandler.cs" />
+    <Compile Include="Handlers\SequentialCommandHandler.cs" />
+    <Compile Include="Handlers\SingleKeyCommandHandler.cs" />
     <Compile Include="Runner.cs" />
     <Compile Include="DarkSoulsCommand.cs" />
     <Compile Include="DSCommandHandler.cs" />
