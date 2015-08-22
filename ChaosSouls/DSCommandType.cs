@@ -36,6 +36,11 @@ namespace ChaosSouls
         MenuPageUp,
         MenuPageDown,
         MenuInfoToggle,
-        MenuTakeOffEquipment
+        MenuTakeOffEquipment,
+        Kick,
+        RollForward,
+        RollBack,
+        RollLeft,
+        RollRight
     }
 }

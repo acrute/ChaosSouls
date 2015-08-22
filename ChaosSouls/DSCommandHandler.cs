@@ -21,10 +21,33 @@ namespace ChaosSouls
 
         public static void HandleDSCommand(DarkSoulsCommand command)
         {
-            SendKeyPress(command.KeyCode);
+            if (command.Type == DSCommandType.Kick)
+            {
+                SendKeyChord(ScanCodeShort.KEY_W, ScanCodeShort.KEY_H);
+            }
+            else if (command.Type == DSCommandType.RollForward)
+            {
+                SendKeyChord(ScanCodeShort.KEY_W, ScanCodeShort.SPACE);
+            }
+            else if (command.Type == DSCommandType.RollBack)
+            {
+                SendKeyChord(ScanCodeShort.KEY_S, ScanCodeShort.SPACE);
+            }
+            else if (command.Type == DSCommandType.RollLeft)
+            {
+                SendKeyChord(ScanCodeShort.KEY_A, ScanCodeShort.SPACE);
+            }
+            else if (command.Type == DSCommandType.RollRight)
+            {
+                SendKeyChord(ScanCodeShort.KEY_D, ScanCodeShort.SPACE);
+            }
+            else
+            {
+                SendKeyPress(command.KeyCode);
+            }
         }
 
-        private static void SendKeyPress(ScanCodeShort key)
+        private static void SendKeyDown(ScanCodeShort key)
         {
             INPUT Input = new INPUT();
             Input.type = 1; // 1 = Keyboard Input
@@ -32,15 +55,43 @@ namespace ChaosSouls
             Input.U.ki.dwFlags = (KEYEVENTF.KEYDOWN | KEYEVENTF.SCANCODE);
 
             SendInput(1, new[] { Input }, INPUT.Size);
+        }
 
-            Thread.Sleep(10);
-
+        private static void SendKeyUp(ScanCodeShort key)
+        {
             INPUT Input2 = new INPUT();
             Input2.type = 1; // 1 = Keyboard Input
             Input2.U.ki.wScan = key;
             Input2.U.ki.dwFlags = (KEYEVENTF.KEYUP | KEYEVENTF.SCANCODE);
 
             SendInput(1, new[] { Input2 }, INPUT.Size);
+        }
+
+        private static void SendKeyPress(ScanCodeShort key)
+        {
+            SendKeyDown(key);
+
+            Thread.Sleep(10);
+
+            SendKeyUp(key);
+        }
+
+        private static void SendKeyChord(params ScanCodeShort[] keys)
+        {
+            Stack<ScanCodeShort> pressedKeys = new Stack<ScanCodeShort>();
+            foreach (var key in keys)
+            {
+                SendKeyDown(key);
+                pressedKeys.Push(key);
+            }
+
+            Thread.Sleep(10);
+
+            while (pressedKeys.Any())
+            {
+                var key = pressedKeys.Pop();
+                SendKeyUp(key);
+            }
         }
     }
 }

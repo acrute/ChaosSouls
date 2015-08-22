@@ -40,7 +40,12 @@ namespace ChaosSouls
             DarkSoulsCommands.MenuPageDown,
             DarkSoulsCommands.MenuInfoToggle,
             DarkSoulsCommands.MenuTakeOffEquipment,
-            DarkSoulsCommands.UseItem
+            DarkSoulsCommands.UseItem,
+            DarkSoulsCommands.Kick,
+            DarkSoulsCommands.RollForward,
+            DarkSoulsCommands.RollBack,
+            DarkSoulsCommands.RollLeft,
+            DarkSoulsCommands.RollRight,
         };
 
         private static System.Timers.Timer CreateTimer(int interval)

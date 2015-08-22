@@ -72,5 +72,12 @@ namespace ChaosSouls
         public static DarkSoulsCommand RightAttackLight = new DarkSoulsCommand(DSCommandType.RightAttackLight, ScanCodeShort.KEY_H);
         public static DarkSoulsCommand Parry = new DarkSoulsCommand(DSCommandType.Parry, ScanCodeShort.TAB);
         public static DarkSoulsCommand Block = new DarkSoulsCommand(DSCommandType.Block, ScanCodeShort.LSHIFT);
+
+        // Experimental! Oooo!
+        public static DarkSoulsCommand Kick = new DarkSoulsCommand(DSCommandType.Kick, ScanCodeShort.KEY_W); // Not the right key code
+        public static DarkSoulsCommand RollForward = new DarkSoulsCommand(DSCommandType.RollForward, ScanCodeShort.KEY_W); // Not the right key code
+        public static DarkSoulsCommand RollBack = new DarkSoulsCommand(DSCommandType.RollBack, ScanCodeShort.KEY_W); // Not the right key code
+        public static DarkSoulsCommand RollLeft = new DarkSoulsCommand(DSCommandType.RollLeft, ScanCodeShort.KEY_W); // Not the right key code
+        public static DarkSoulsCommand RollRight = new DarkSoulsCommand(DSCommandType.RollRight, ScanCodeShort.KEY_W); // Not the right key code
     }
 }
