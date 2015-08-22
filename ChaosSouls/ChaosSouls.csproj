@@ -78,6 +78,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="CodeThatDoesNotMatter.cs" />
     <Compile Include="DarkSoulsCommand.cs" />
+    <Compile Include="SystemStructures.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScanCodeShort.cs" />
