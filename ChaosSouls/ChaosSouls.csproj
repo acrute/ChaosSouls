@@ -71,7 +71,6 @@
     <Compile Include="Handlers\SequentialCommandHandler.cs" />
     <Compile Include="Handlers\SingleKeyCommandHandler.cs" />
     <Compile Include="Runner.cs" />
-    <Compile Include="DarkSoulsCommand.cs" />
     <Compile Include="DSCommandHandler.cs" />
     <Compile Include="DSCommandType.cs" />
     <Compile Include="SystemStructures.cs" />
