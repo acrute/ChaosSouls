@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Timers;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using WindowsInput;
@@ -85,6 +86,7 @@ namespace ChaosSouls
     [Flags]
     public enum KEYEVENTF : uint
     {
+        KEYDOWN = 0x0,
         EXTENDEDKEY = 0x0001,
         KEYUP = 0x0002,
         SCANCODE = 0x0008,
@@ -988,15 +990,21 @@ namespace ChaosSouls
 
         public static void SendSingleKey(ScanCodeShort key)
         {
-            INPUT[] Inputs = new INPUT[1];
             INPUT Input = new INPUT();
-
             Input.type = 1; // 1 = Keyboard Input
             Input.U.ki.wScan = key;
-            Input.U.ki.dwFlags = KEYEVENTF.SCANCODE;
-            Inputs[0] = Input;
+            Input.U.ki.dwFlags = (KEYEVENTF.KEYDOWN | KEYEVENTF.SCANCODE);
 
-            SendInput(1, Inputs, INPUT.Size);
+            SendInput(1, new[] { Input }, INPUT.Size);
+
+            Thread.Sleep(10);
+
+            INPUT Input2 = new INPUT();
+            Input2.type = 1; // 1 = Keyboard Input
+            Input2.U.ki.wScan = key;
+            Input2.U.ki.dwFlags = (KEYEVENTF.KEYUP | KEYEVENTF.SCANCODE);
+
+            SendInput(1, new[] { Input2 }, INPUT.Size);
         }
 
         public static void BashKeys()
@@ -1007,9 +1015,9 @@ namespace ChaosSouls
             SendSingleKey(ScanCodeShort.KEY_K);
         }
 
-        public static Timer CreateTimer(int interval)
+        public static System.Timers.Timer CreateTimer(int interval)
         {
-            return new Timer(interval)
+            return new System.Timers.Timer(interval)
             {
                 AutoReset = true
             };
@@ -1019,7 +1027,7 @@ namespace ChaosSouls
 
         public static void Main(string[] args)
         {
-            var timer = CreateTimer(50);
+            var timer = CreateTimer(1000);
             timer.Elapsed += OnTimedEvent;
             timer.Start();
 
@@ -1078,11 +1086,13 @@ namespace ChaosSouls
 
         private static void OnTimedEvent(object obj, ElapsedEventArgs e)
         {
-            var random = new Random();
-            var index = random.Next(VanillaKeys.Count());
-            var kvp = VanillaKeys.ElementAt(index);
+            //var random = new Random();
+            //var index = random.Next(VanillaKeys.Count());
+            //var kvp = VanillaKeys.ElementAt(index);
 
-            SendSingleKey(kvp.Key);
+            //SendSingleKey(kvp.Key);
+
+            SendSingleKey(ScanCodeShort.SPACE);
         }
     }
 }
