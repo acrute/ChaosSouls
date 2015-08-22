@@ -61,8 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Chaos.cs" />
+    <Compile Include="Runner.cs" />
     <Compile Include="DarkSoulsCommand.cs" />
+    <Compile Include="DSCommandHandler.cs" />
+    <Compile Include="DSCommandType.cs" />
     <Compile Include="SystemStructures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

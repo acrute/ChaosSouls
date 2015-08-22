@@ -2,32 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Timers;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Runtime.InteropServices;
 
 namespace ChaosSouls
 {
-    public class Class1
+    public static class Chaos
     {
-        public static System.Timers.Timer CreateTimer(int interval)
-        {
-            return new System.Timers.Timer(interval)
-            {
-                AutoReset = true
-            };
-        }
-
-        public static void Main(string[] args)
-        {
-            var timer = CreateTimer(50);
-            timer.Elapsed += OnTimedEvent;
-            timer.Start();
-
-            Console.WriteLine("Press the Enter key to exit the program at any time... ");
-            Console.ReadLine();
-        }
+        private static System.Timers.Timer ChaosTimer;
 
         public static IEnumerable<DarkSoulsCommand> PossibleCommands = new[] 
         {
@@ -62,7 +43,29 @@ namespace ChaosSouls
             DarkSoulsCommands.UseItem
         };
 
-        private static void OnTimedEvent(object obj, ElapsedEventArgs e)
+        private static System.Timers.Timer CreateTimer(int interval)
+        {
+            return new System.Timers.Timer(interval)
+            {
+                AutoReset = true
+            };
+        }
+
+        public static void Incite()
+        {
+            ChaosTimer = CreateTimer(50);
+            ChaosTimer.Elapsed += OnTimedEvent;
+            ChaosTimer.Start();
+        }
+
+        // This train we're on don't make no stops
+        //public static void Suppress()
+        //{
+        //    ChaosTimer.Stop();
+        //    ChaosTimer.Dispose();
+        //}
+
+        private static void OnTimedEvent(object obj, System.Timers.ElapsedEventArgs e)
         {
             var random = new Random();
             var index = random.Next(PossibleCommands.Count());

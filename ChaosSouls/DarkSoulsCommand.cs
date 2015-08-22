@@ -8,39 +8,6 @@ using System.Threading.Tasks;
 
 namespace ChaosSouls
 {
-    public enum DSCommandType
-    {
-        Left,
-        Right,
-        Forward,
-        Back,
-        Backstep,
-        CameraAngleUp,
-        CameraAngleDown,
-        CameraAngleLeft,
-        CameraAngleRight,
-        EnvironmentInteraction,
-        SwitchActiveSpell,
-        SwitchLeftHandEquip,
-        SwitchRightHandEquip,
-        SwitchActiveItem,
-        UseItem,
-        ToggleLockOn,
-        GestureMenu,
-        ToggleWeaponGrip,
-        RightAttackHeavy,
-        RightAttackLight,
-        Parry,
-        Block,
-        Confirm,
-        Cancel,
-        ToggleMenu,
-        MenuPageUp,
-        MenuPageDown,
-        MenuInfoToggle,
-        MenuTakeOffEquipment
-    }
-
     public class DarkSoulsCommand
     {
         private DSCommandType _type;
@@ -105,41 +72,5 @@ namespace ChaosSouls
         public static DarkSoulsCommand RightAttackLight = new DarkSoulsCommand(DSCommandType.RightAttackLight, ScanCodeShort.KEY_H);
         public static DarkSoulsCommand Parry = new DarkSoulsCommand(DSCommandType.Parry, ScanCodeShort.TAB);
         public static DarkSoulsCommand Block = new DarkSoulsCommand(DSCommandType.Block, ScanCodeShort.LSHIFT);
-    }
-
-    public static class DSCommandHandler
-    {
-        ////<summary>
-        ////Declaration of external SendInput method
-        ////</summary>
-        [DllImport("user32.dll")]
-        internal static extern uint SendInput(
-            uint nInputs,
-            [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs,
-            int cbSize);
-
-        public static void SendSingleKey(ScanCodeShort key)
-        {
-            INPUT Input = new INPUT();
-            Input.type = 1; // 1 = Keyboard Input
-            Input.U.ki.wScan = key;
-            Input.U.ki.dwFlags = (KEYEVENTF.KEYDOWN | KEYEVENTF.SCANCODE);
-
-            SendInput(1, new[] { Input }, INPUT.Size);
-
-            Thread.Sleep(10);
-
-            INPUT Input2 = new INPUT();
-            Input2.type = 1; // 1 = Keyboard Input
-            Input2.U.ki.wScan = key;
-            Input2.U.ki.dwFlags = (KEYEVENTF.KEYUP | KEYEVENTF.SCANCODE);
-
-            SendInput(1, new[] { Input2 }, INPUT.Size);
-        }
-
-        public static void HandleDSCommand(DarkSoulsCommand command)
-        {
-            SendSingleKey(command.KeyCode);
-        }
     }
 }
