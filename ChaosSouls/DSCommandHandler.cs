@@ -11,6 +11,21 @@ namespace ChaosSouls
 {
     public static class DSCommandHandler
     {
+        private class StateInfo
+        {
+            private readonly ICommandHandler _handler;
+
+            public StateInfo(ICommandHandler handler)
+            {
+                _handler = handler;
+            }
+
+            public ICommandHandler Handler
+            {
+                get { return _handler; }
+            }
+        }
+
         private static IDictionary<DSCommandType, ICommandHandler> CommandMap = new Dictionary<DSCommandType, ICommandHandler>() 
         {
             { DSCommandType.Left, new SingleKeyCommandHandler(ScanCodeShort.KEY_A) },
@@ -41,7 +56,7 @@ namespace ChaosSouls
             { DSCommandType.RightAttackHeavy, new SingleKeyCommandHandler(ScanCodeShort.KEY_U) },
             { DSCommandType.RightAttackLight, new SingleKeyCommandHandler(ScanCodeShort.KEY_H) },
             { DSCommandType.Parry, new SingleKeyCommandHandler(ScanCodeShort.TAB) },
-            { DSCommandType.Block, new SingleKeyCommandHandler(ScanCodeShort.LSHIFT) },
+            { DSCommandType.Block, new HoldReleaseCommandHandler(2000, ScanCodeShort.LSHIFT) },
             { DSCommandType.Confirm, new SingleKeyCommandHandler(ScanCodeShort.RETURN) },
             { DSCommandType.Cancel, new SingleKeyCommandHandler(ScanCodeShort.BACK) }, // A little questionable
 
@@ -62,8 +77,7 @@ namespace ChaosSouls
 
             { DSCommandType.RightAttackHeavyCombo, new DelayedKeyCommandHandler(630, ScanCodeShort.KEY_U, ScanCodeShort.KEY_U) },
             { DSCommandType.RightAttackLightCombo, new DelayedKeyCommandHandler(630, ScanCodeShort.KEY_H, ScanCodeShort.KEY_H) },
-            
-            { DSCommandType.StartBlocking, new HoldKeyCommandHandler(ScanCodeShort.LSHIFT) },
+           
             { DSCommandType.StopBlocking, new ReleaseKeyCommandHandler(ScanCodeShort.LSHIFT) },
 
             { DSCommandType.StartMovingForward, new SequentialCommandHandler(
@@ -109,12 +123,22 @@ namespace ChaosSouls
             if (CommandMap.ContainsKey(commandType))
             {
                 var handler = CommandMap[commandType];
+                StateInfo stateObject = new StateInfo(handler);
+                ThreadPool.QueueUserWorkItem(new WaitCallback(HandleCommand), stateObject);
                 handler.Handle();
             }
             else
             {
                 Console.WriteLine("Unable to handle command type {0} - no associated handler", commandType);
             }
+        }
+
+        public static void HandleCommand(object stateObject)
+        {
+            var stateObj = (StateInfo)stateObject;
+            var handler = stateObj.Handler;
+
+            handler.Handle();
         }
     }
 }

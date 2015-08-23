@@ -62,8 +62,8 @@ namespace ChaosSouls
             { "r2", DSCommandType.RightAttackHeavy },
             { "r1", DSCommandType.RightAttackLight },
             { "l2", DSCommandType.Parry },
-            { "l1", DSCommandType.StartBlocking },
-            { "block", DSCommandType.StartBlocking },
+            { "l1", DSCommandType.Block },
+            { "block", DSCommandType.Block },
             { "unblock", DSCommandType.StopBlocking },
             { "e", DSCommandType.Confirm },
             { "bs", DSCommandType.Cancel },
@@ -127,7 +127,6 @@ namespace ChaosSouls
             DSCommandType.JumpAttack,
             DSCommandType.RightAttackHeavyCombo,
             DSCommandType.RightAttackLightCombo,
-            DSCommandType.StartBlocking,
             DSCommandType.StopBlocking,
 
             DSCommandType.StartMovingForward,

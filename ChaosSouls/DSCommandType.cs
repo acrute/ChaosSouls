@@ -66,7 +66,6 @@ namespace ChaosSouls
         RightAttackHeavyCombo,
         RightAttackLightCombo,
 
-        StartBlocking,
         StopBlocking
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="Chaos.cs" />
     <Compile Include="Handlers\DelayedKeyCommandHandler.cs" />
     <Compile Include="Handlers\HoldKeyCommandHandler.cs" />
+    <Compile Include="Handlers\HoldReleaseCommandHandler.cs" />
     <Compile Include="Handlers\ICommandHandler.cs" />
     <Compile Include="Handlers\KeyboardInterface.cs" />
     <Compile Include="Handlers\KeyChordCommandHandler.cs" />
