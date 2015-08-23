@@ -10,19 +10,42 @@ namespace ChaosSouls.Handlers
     public class HoldReleaseCommandHandler : ICommandHandler
     {
         private readonly int _delay;
-        private readonly ScanCodeShort _key;
+        private readonly ScanCodeShort[] _keys;
 
-        public HoldReleaseCommandHandler(int delay, ScanCodeShort key)
+        public HoldReleaseCommandHandler(params ScanCodeShort[] keys)
+        {
+            _keys = keys;
+            _delay = GetRandomInterval();
+        }
+
+        public HoldReleaseCommandHandler(int delay, params ScanCodeShort[] keys)
         {
             _delay = delay;
-            _key = key;
+            _keys = keys;
+        }
+
+        private static int GetRandomInterval()
+        {
+            var random = new Random();
+            return random.Next(1000);
         }
 
         public void Handle()
         {
-            KeyboardInterface.SendKeyDown(_key);
+            var stack = new Stack<ScanCodeShort>();
+            foreach (var key in _keys)
+            {
+                KeyboardInterface.SendKeyDown(key);
+                stack.Push(key);
+            }
+            
             Thread.Sleep(_delay);
-            KeyboardInterface.SendKeyUp(_key);
+
+            while (stack.Any())
+            {
+                var key = stack.Pop();
+                KeyboardInterface.SendKeyUp(key);
+            }
         }
     }
 }

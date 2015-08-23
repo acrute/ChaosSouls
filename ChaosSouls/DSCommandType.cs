@@ -33,9 +33,16 @@ namespace ChaosSouls
         StopRunning,
 
         CameraAngleUp,
+        CameraAngleUpLeft,
+        CameraAngleUpRight,
+
         CameraAngleDown,
+        CameraAngleDownLeft,
+        CameraAngleDownRight,
+
         CameraAngleLeft,
         CameraAngleRight,
+
         EnvironmentInteraction,
         SwitchActiveSpell,
         SwitchLeftHandEquip,

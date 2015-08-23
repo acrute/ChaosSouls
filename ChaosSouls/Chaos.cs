@@ -49,7 +49,16 @@ namespace ChaosSouls
             { "run", DSCommandType.StartRunning },
             { "jog", DSCommandType.StopRunning },
 
-            // TODO: Add in the commands to mess with camera angles and such
+            { "cu", DSCommandType.CameraAngleUp },
+            { "cul", DSCommandType.CameraAngleUpLeft },
+            { "cur", DSCommandType.CameraAngleUpRight },
+
+            { "cd", DSCommandType.CameraAngleDown },
+            { "cdl", DSCommandType.CameraAngleDownLeft },
+            { "cdr", DSCommandType.CameraAngleDownRight },
+
+            { "cl", DSCommandType.CameraAngleLeft },
+            { "cr", DSCommandType.CameraAngleRight },
 
             { "a", DSCommandType.EnvironmentInteraction },
             { "du", DSCommandType.SwitchActiveSpell },
@@ -95,10 +104,18 @@ namespace ChaosSouls
             DSCommandType.Right,
             DSCommandType.Forward,
             DSCommandType.Back,
+
             DSCommandType.CameraAngleUp,
+            DSCommandType.CameraAngleUpLeft,
+            DSCommandType.CameraAngleUpRight,
+
             DSCommandType.CameraAngleDown,
+            DSCommandType.CameraAngleDownLeft,
+            DSCommandType.CameraAngleDownRight,
+
             DSCommandType.CameraAngleLeft,
             DSCommandType.CameraAngleRight,
+
             DSCommandType.EnvironmentInteraction,
             DSCommandType.SwitchActiveSpell,
             DSCommandType.SwitchLeftHandEquip,

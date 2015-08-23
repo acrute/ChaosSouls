@@ -28,6 +28,7 @@ namespace ChaosSouls
 
         private static IDictionary<DSCommandType, ICommandHandler> CommandMap = new Dictionary<DSCommandType, ICommandHandler>() 
         {
+            { DSCommandType.Backstep, new SingleKeyCommandHandler(ScanCodeShort.SPACE) },
             { DSCommandType.Left, new SingleKeyCommandHandler(ScanCodeShort.KEY_A) },
             { DSCommandType.Right, new SingleKeyCommandHandler(ScanCodeShort.KEY_D) },
             { DSCommandType.Forward, new SingleKeyCommandHandler(ScanCodeShort.KEY_W) },
@@ -38,11 +39,17 @@ namespace ChaosSouls
             { DSCommandType.BackLeft, new KeyChordCommandHandler(ScanCodeShort.KEY_S, ScanCodeShort.KEY_A) },
             { DSCommandType.BackRight, new KeyChordCommandHandler(ScanCodeShort.KEY_S, ScanCodeShort.KEY_D) },
             
-            { DSCommandType.Backstep, new SingleKeyCommandHandler(ScanCodeShort.SPACE) },
-            { DSCommandType.CameraAngleUp, new SingleKeyCommandHandler(ScanCodeShort.KEY_I) },
-            { DSCommandType.CameraAngleDown, new SingleKeyCommandHandler(ScanCodeShort.KEY_K) },
-            { DSCommandType.CameraAngleLeft, new SingleKeyCommandHandler(ScanCodeShort.KEY_J) },
-            { DSCommandType.CameraAngleRight, new SingleKeyCommandHandler(ScanCodeShort.KEY_L) },
+            { DSCommandType.CameraAngleUp, new HoldReleaseCommandHandler(ScanCodeShort.KEY_I) },
+            { DSCommandType.CameraAngleUpLeft, new HoldReleaseCommandHandler(ScanCodeShort.KEY_I, ScanCodeShort.KEY_J) },
+            { DSCommandType.CameraAngleUpRight, new HoldReleaseCommandHandler(ScanCodeShort.KEY_I, ScanCodeShort.KEY_L) },
+
+            { DSCommandType.CameraAngleDown, new HoldReleaseCommandHandler(ScanCodeShort.KEY_K) },
+            { DSCommandType.CameraAngleDownLeft, new HoldReleaseCommandHandler(ScanCodeShort.KEY_K, ScanCodeShort.KEY_J) },
+            { DSCommandType.CameraAngleDownRight, new HoldReleaseCommandHandler(ScanCodeShort.KEY_K, ScanCodeShort.KEY_L) },
+
+            { DSCommandType.CameraAngleLeft, new HoldReleaseCommandHandler(ScanCodeShort.KEY_J) },
+            { DSCommandType.CameraAngleRight, new HoldReleaseCommandHandler(ScanCodeShort.KEY_L) },
+            
             { DSCommandType.EnvironmentInteraction, new SingleKeyCommandHandler(ScanCodeShort.KEY_Q) },
             { DSCommandType.SwitchActiveSpell, new SingleKeyCommandHandler(ScanCodeShort.KEY_R) },
             { DSCommandType.SwitchLeftHandEquip, new SingleKeyCommandHandler(ScanCodeShort.KEY_C) },
