@@ -10,7 +10,85 @@ namespace ChaosSouls
     {
         private static System.Timers.Timer ChaosTimer;
 
-        public static IEnumerable<DSCommandType> PossibleCommands = new[] 
+        public static IDictionary<string, DSCommandType> CommandMap = new Dictionary<string, DSCommandType>() 
+        {
+            { "backstep", DSCommandType.Backstep },
+            { "roll", DSCommandType.Backstep },
+
+            { "tapleft", DSCommandType.Left },
+            { "tapright", DSCommandType.Right },
+            { "tapforward", DSCommandType.Forward },
+            { "tapback", DSCommandType.Back },
+
+            { "l", DSCommandType.StartMovingLeft },
+            { "left", DSCommandType.StartMovingLeft },
+
+            { "r", DSCommandType.StartMovingRight },
+            { "right", DSCommandType.StartMovingRight },
+
+            { "f", DSCommandType.StartMovingForward },
+            { "forward", DSCommandType.StartMovingForward },
+            
+            { "b", DSCommandType.StartMovingBack },
+            { "back", DSCommandType.StartMovingBack },
+
+            { "fl", DSCommandType.StartMovingForwardLeft },
+            { "forwardleft", DSCommandType.StartMovingForwardLeft },
+            
+            { "fr", DSCommandType.StartMovingForwardLeft },
+            { "forwardright", DSCommandType.StartMovingForwardRight },
+            
+            { "bl", DSCommandType.StartMovingForwardLeft },
+            { "backleft", DSCommandType.StartMovingForwardLeft },
+            
+            { "br", DSCommandType.StartMovingForwardLeft },
+            { "backright", DSCommandType.StartMovingForwardLeft },
+
+            { "stop", DSCommandType.StopMoving },
+
+            { "run", DSCommandType.StartRunning },
+            { "jog", DSCommandType.StopRunning },
+
+            // TODO: Add in the commands to mess with camera angles and such
+
+            { "a", DSCommandType.EnvironmentInteraction },
+            { "du", DSCommandType.SwitchActiveSpell },
+            { "dl", DSCommandType.SwitchLeftHandEquip },
+            { "dr", DSCommandType.SwitchRightHandEquip },
+            { "dd", DSCommandType.SwitchActiveItem },
+            { "lock", DSCommandType.ToggleLockOn },
+            { "gesture", DSCommandType.GestureMenu },
+            { "g", DSCommandType.ToggleWeaponGrip },
+            { "r2", DSCommandType.RightAttackHeavy },
+            { "r1", DSCommandType.RightAttackLight },
+            { "l2", DSCommandType.Parry },
+            { "l1", DSCommandType.StartBlocking },
+            { "block", DSCommandType.StartBlocking },
+            { "unblock", DSCommandType.StopBlocking },
+            { "e", DSCommandType.Confirm },
+            { "bs", DSCommandType.Cancel },
+            { "m", DSCommandType.ToggleMenu },
+            { "pageDn", DSCommandType.MenuPageDown },
+            { "pageUp", DSCommandType.MenuPageUp },
+            { "menuInfo", DSCommandType.MenuInfoToggle },
+            { "unequip", DSCommandType.MenuTakeOffEquipment },
+            { "u", DSCommandType.UseItem },
+            { "item", DSCommandType.UseItem },
+            { "k", DSCommandType.Kick },
+            { "kick", DSCommandType.Kick },
+            { "ja", DSCommandType.JumpAttack },
+            { "jumpattack", DSCommandType.JumpAttack },
+            { "rf", DSCommandType.RollForward },
+            { "rb", DSCommandType.RollBack },
+            { "rl", DSCommandType.RollLeft },
+            { "rr", DSCommandType.RollRight },
+            { "combo", DSCommandType.RightAttackLightCombo },
+            { "r1x2", DSCommandType.RightAttackLightCombo },
+            { "heavycombo", DSCommandType.RightAttackHeavyCombo },
+            { "r2x2", DSCommandType.RightAttackHeavyCombo },
+        };
+
+        public static ISet<DSCommandType> PossibleCommands = new HashSet<DSCommandType> 
         {
             DSCommandType.Backstep,
             DSCommandType.Left,
@@ -74,11 +152,31 @@ namespace ChaosSouls
             };
         }
 
-        public static void Incite()
+        public static void StartRandom()
         {
             ChaosTimer = CreateTimer(200);
-            ChaosTimer.Elapsed += OnTimedEvent;
+            ChaosTimer.Elapsed += DispatchRandomChaos;
             ChaosTimer.Start();
+        }
+
+        public static void StartRiot()
+        {
+            ChaosTimer = CreateTimer(500);
+            ChaosTimer.Elapsed += DispatchChaosCommand;
+            ChaosTimer.Start();
+        }
+
+        public static void Dispatch(string command)
+        {
+            if (CommandMap.ContainsKey(command))
+            {
+                var commandType = CommandMap[command];
+                DSCommandHandler.HandleDSCommand(commandType);
+            }
+            else
+            {
+                Console.WriteLine("Unable to handle command {0} - not found", command);
+            }
         }
 
         // This train we're on don't make no stops
@@ -88,7 +186,19 @@ namespace ChaosSouls
         //    ChaosTimer.Dispose();
         //}
 
-        private static void OnTimedEvent(object obj, System.Timers.ElapsedEventArgs e)
+        private static void DispatchChaosCommand(object obj, System.Timers.ElapsedEventArgs e)
+        {
+            var random = new Random();
+            var index = random.Next(CommandMap.Count());
+            var kvp = CommandMap.ElementAt(index);
+            var command = kvp.Key;
+
+            Console.WriteLine("Dispatching command {0}", command);
+
+            Dispatch(command);
+        }
+
+        private static void DispatchRandomChaos(object obj, System.Timers.ElapsedEventArgs e)
         {
             var random = new Random();
             var index = random.Next(PossibleCommands.Count());

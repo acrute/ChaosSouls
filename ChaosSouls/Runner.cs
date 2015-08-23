@@ -13,7 +13,8 @@ namespace ChaosSouls
     {
         public static void Main(string[] args)
         {
-            Chaos.Incite();
+            //Chaos.StartRandom();
+            Chaos.StartRiot();
 
             Console.WriteLine("Press the Enter key to return to order...");
             Console.ReadLine();
