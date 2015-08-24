@@ -77,10 +77,14 @@ namespace ChaosSouls
             { "e", DSCommandType.Confirm },
             { "bs", DSCommandType.Cancel },
             { "m", DSCommandType.ToggleMenu },
-            { "pageDn", DSCommandType.MenuPageDown },
-            { "pageUp", DSCommandType.MenuPageUp },
-            { "menuInfo", DSCommandType.MenuInfoToggle },
+            { "pagedn", DSCommandType.MenuPageDown },
+            { "pageup", DSCommandType.MenuPageUp },
+            { "menuinfo", DSCommandType.MenuInfoToggle },
             { "unequip", DSCommandType.MenuTakeOffEquipment },
+            { "ml", DSCommandType.MenuLeft },
+            { "mr", DSCommandType.MenuRight },
+            { "mu", DSCommandType.MenuUp },
+            { "md", DSCommandType.MenuDown},
             { "u", DSCommandType.UseItem },
             { "item", DSCommandType.UseItem },
             { "k", DSCommandType.Kick },
@@ -130,11 +134,6 @@ namespace ChaosSouls
             DSCommandType.Block,
             DSCommandType.Confirm,
             DSCommandType.Cancel,
-            DSCommandType.ToggleMenu,
-            DSCommandType.MenuPageUp,
-            DSCommandType.MenuPageDown,
-            DSCommandType.MenuInfoToggle,
-            DSCommandType.MenuTakeOffEquipment,
             DSCommandType.UseItem,
             DSCommandType.Kick,
             DSCommandType.RollForward,
@@ -157,7 +156,18 @@ namespace ChaosSouls
 
             DSCommandType.StopMoving,
             DSCommandType.StartRunning,
-            DSCommandType.StopRunning
+            DSCommandType.StopRunning,
+
+            DSCommandType.ToggleMenu,
+            DSCommandType.MenuPageUp,
+            DSCommandType.MenuPageDown,
+            DSCommandType.MenuInfoToggle,
+            DSCommandType.MenuTakeOffEquipment,
+
+            DSCommandType.MenuUp,
+            DSCommandType.MenuDown,
+            DSCommandType.MenuLeft,
+            DSCommandType.MenuRight
         };
 
         private static System.Timers.Timer CreateTimer(int interval)
@@ -209,7 +219,7 @@ namespace ChaosSouls
             var kvp = CommandMap.ElementAt(index);
             var command = kvp.Key;
 
-            Console.WriteLine("Dispatching command {0}", command);
+            //Console.WriteLine("Dispatching command {0}", command);
 
             Dispatch(command);
         }

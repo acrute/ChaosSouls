@@ -67,12 +67,6 @@ namespace ChaosSouls
             { DSCommandType.Confirm, new SingleKeyCommandHandler(ScanCodeShort.RETURN) },
             { DSCommandType.Cancel, new SingleKeyCommandHandler(ScanCodeShort.BACK) }, // A little questionable
 
-            { DSCommandType.ToggleMenu, new SingleKeyCommandHandler(ScanCodeShort.END) },
-            { DSCommandType.MenuPageUp, new SingleKeyCommandHandler(ScanCodeShort.PRIOR) }, // Really questionable
-            { DSCommandType.MenuPageDown, new SingleKeyCommandHandler(ScanCodeShort.NEXT) }, // Really questionable
-            { DSCommandType.MenuInfoToggle, new SingleKeyCommandHandler(ScanCodeShort.INSERT) },
-            { DSCommandType.MenuTakeOffEquipment, new SingleKeyCommandHandler(ScanCodeShort.DELETE) },
-
             // Complex Commands...
 
             { DSCommandType.Kick, new KeyChordCommandHandler(ScanCodeShort.KEY_W, ScanCodeShort.KEY_H) },
@@ -122,7 +116,18 @@ namespace ChaosSouls
             { DSCommandType.StopMoving, new ReleaseKeyCommandHandler(ScanCodeShort.KEY_W, ScanCodeShort.KEY_A, ScanCodeShort.KEY_S, ScanCodeShort.KEY_D) },
 
             { DSCommandType.StartRunning, new HoldKeyCommandHandler(ScanCodeShort.SPACE) },
-            { DSCommandType.StopRunning, new ReleaseKeyCommandHandler(ScanCodeShort.SPACE) }
+            { DSCommandType.StopRunning, new ReleaseKeyCommandHandler(ScanCodeShort.SPACE) },
+
+            { DSCommandType.ToggleMenu, new SingleKeyCommandHandler(ScanCodeShort.END) },
+            { DSCommandType.MenuPageUp, new SingleKeyCommandHandler(ScanCodeShort.PRIOR) },
+            { DSCommandType.MenuPageDown, new SingleKeyCommandHandler(ScanCodeShort.NEXT) },
+            { DSCommandType.MenuInfoToggle, new SingleKeyCommandHandler(ScanCodeShort.INSERT) },
+            { DSCommandType.MenuTakeOffEquipment, new SingleKeyCommandHandler(ScanCodeShort.DELETE) },
+
+            { DSCommandType.MenuUp, new SingleKeyCommandHandler(ScanCodeShort.UP) },
+            { DSCommandType.MenuDown, new SingleKeyCommandHandler(ScanCodeShort.DOWN) },
+            { DSCommandType.MenuLeft, new SingleKeyCommandHandler(ScanCodeShort.LEFT) },
+            { DSCommandType.MenuRight, new SingleKeyCommandHandler(ScanCodeShort.RIGHT) },
         };
 
         public static void HandleDSCommand(DSCommandType commandType)
@@ -132,7 +137,6 @@ namespace ChaosSouls
                 var handler = CommandMap[commandType];
                 StateInfo stateObject = new StateInfo(handler);
                 ThreadPool.QueueUserWorkItem(new WaitCallback(HandleCommand), stateObject);
-                handler.Handle();
             }
             else
             {

@@ -10,33 +10,57 @@ namespace ChaosSouls.Handlers
 {
     public static class KeyboardInterface
     {
-        ////<summary>
-        ////Declaration of external SendInput method
-        ////</summary>
-        [DllImport("user32.dll")]
-        internal static extern uint SendInput(
-            uint nInputs,
-            [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs,
-            int cbSize);
+        public static bool IsExtendedKey(ScanCodeShort keyCode)
+        {
+            var extendedKeys = new[] 
+            {
+                ScanCodeShort.END,
+                ScanCodeShort.PRIOR,
+                ScanCodeShort.NEXT,
+                ScanCodeShort.INSERT,
+                ScanCodeShort.DELETE,
+                ScanCodeShort.UP,
+                ScanCodeShort.DOWN,
+                ScanCodeShort.LEFT,
+                ScanCodeShort.RIGHT
+            };
+
+            return extendedKeys.Any(c => c == keyCode);
+        }
 
         public static void SendKeyDown(ScanCodeShort key)
         {
             INPUT Input = new INPUT();
             Input.type = 1; // 1 = Keyboard Input
             Input.U.ki.wScan = key;
-            Input.U.ki.dwFlags = (KEYEVENTF.KEYDOWN | KEYEVENTF.SCANCODE);
+            if (IsExtendedKey(key))
+            {
+                Input.U.ki.dwFlags = (KEYEVENTF.KEYDOWN | KEYEVENTF.SCANCODE | KEYEVENTF.EXTENDEDKEY);
+            }
+            else
+            {
+                Input.U.ki.dwFlags = (KEYEVENTF.KEYDOWN | KEYEVENTF.SCANCODE);
+            }
+            
 
-            SendInput(1, new[] { Input }, INPUT.Size);
+            WindowsApi.SendInput(1, new[] { Input }, INPUT.Size);
         }
 
         public static void SendKeyUp(ScanCodeShort key)
         {
-            INPUT Input2 = new INPUT();
-            Input2.type = 1; // 1 = Keyboard Input
-            Input2.U.ki.wScan = key;
-            Input2.U.ki.dwFlags = (KEYEVENTF.KEYUP | KEYEVENTF.SCANCODE);
+            INPUT Input = new INPUT();
+            Input.type = 1; // 1 = Keyboard Input
+            Input.U.ki.wScan = key;
+            if (IsExtendedKey(key))
+            {
+                Input.U.ki.dwFlags = (KEYEVENTF.KEYUP | KEYEVENTF.SCANCODE | KEYEVENTF.EXTENDEDKEY);
+            }
+            else
+            {
+                Input.U.ki.dwFlags = (KEYEVENTF.KEYUP| KEYEVENTF.SCANCODE);
+            }
 
-            SendInput(1, new[] { Input2 }, INPUT.Size);
+            WindowsApi.SendInput(1, new[] { Input }, INPUT.Size);
         }
 
         public static void SendKeyPress(ScanCodeShort key)
